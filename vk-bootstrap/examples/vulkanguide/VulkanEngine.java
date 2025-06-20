@@ -10,6 +10,7 @@ import org.lwjgl.util.vma.VmaAllocatorCreateInfo;
 import org.lwjgl.util.vma.VmaVulkanFunctions;
 import org.lwjgl.vulkan.*;
 import port.Port;
+import vulkanguide.VulkanGuideUtils;
 import vkbootstrap.*;
 
 import java.io.FileInputStream;
@@ -964,7 +965,7 @@ public class VulkanEngine {
         PointerBuffer data = memAllocPointer(1);
         vmaMapMemory(_allocator, stagingBuffer._allocation, data);
 
-        Buffer dummy = Port.data(mesh._vertices);
+        Buffer dummy = VulkanGuideUtils.data(mesh._vertices);
 
         MemoryUtil.memCopy(memAddress(dummy), data.get(),  mesh._vertices.size() * Vertex.sizeof());
 

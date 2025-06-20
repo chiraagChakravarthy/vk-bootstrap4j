@@ -495,7 +495,7 @@ public class VkBootstrap {
         if (requested.inheritedQueries() && !supported.inheritedQueries()) return false;
 
         for(int i = 0; i < extension_requested.size(); ++i) {
-            var res = VkbGenericFeaturesPNextNode.match(extension_requested.get(i), extension_supported.get(i));
+            boolean res = VkbGenericFeaturesPNextNode.match(extension_requested.get(i), extension_supported.get(i));
             if(!res) return false;
         }
 
@@ -623,10 +623,10 @@ public class VkBootstrap {
         return available_formats.get(0);
     }
 
-    /*1574*/ public static /*VkPresentModeKHR*/int find_present_mode(final List</*VkPresentModeKHR*/Integer> available_resent_modes,
+    /*1574*/ public static /*VkPresentModeKHR*/int find_present_mode(final List</*VkPresentModeKHR*/Integer> available_present_modes,
                                        final List</*VkPresentModeKHR*/Integer> desired_present_modes) {
         for (var desired_pm : desired_present_modes) {
-            for (var available_pm : available_resent_modes) {
+            for (var available_pm : available_present_modes) {
                 // finds the first present mode that is desired and available
                 if (Objects.equals(desired_pm , available_pm)) return desired_pm;
             }

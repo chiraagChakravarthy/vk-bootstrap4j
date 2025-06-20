@@ -6,6 +6,8 @@ import port.error_code;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import org.lwjgl.system.MemoryStack;
+import static org.lwjgl.system.MemoryStack.stackPush;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +91,7 @@ public class VkbInstanceBuilder {
     }
 
     /*573*/ public Result<VkbInstance> build() {
+        try (MemoryStack stack = stackPush()) {
 
         var sys_info_ret = VkbSystemInfo.get_system_info(info.fp_vkGetInstanceProcAddr);
         if (sys_info_ret.not()) return new Result(sys_info_ret.error());
@@ -265,11 +268,28 @@ public class VkbInstanceBuilder {
         instance.instance_version = api_version;
         instance.fp_vkGetInstanceProcAddr = vulkan_functions().ptr_vkGetInstanceProcAddr;
         return new Result(instance);
+        }
     }
 
     /*733*/ public VkbInstanceBuilder set_app_name (String app_name) {
         if (null == app_name) return this;
         info.app_name = app_name;
+        return this;
+    }
+
+    public VkbInstanceBuilder set_engine_name(String engine_name) {
+        if (null == engine_name) return this;
+        info.engine_name = engine_name;
+        return this;
+    }
+
+    public VkbInstanceBuilder set_app_version(int app_version) {
+        info.application_version = app_version;
+        return this;
+    }
+
+    public VkbInstanceBuilder set_engine_version(int engine_version) {
+        info.engine_version = engine_version;
         return this;
     }
 

@@ -2,7 +2,6 @@ package port;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.PointerBuffer;
-import vulkanguide.Vertex;
 
 import java.nio.*;
 import java.util.List;
@@ -73,29 +72,6 @@ public class Port {
         pb.flip();
 
         return pb;
-    }
-
-    public static final Buffer data(List<Vertex> vectorList) {
-
-        int nb = vectorList.size();
-        FloatBuffer ret = BufferUtils.createFloatBuffer(nb*Vertex.sizeof()/Float.BYTES);
-        for( var vertex : vectorList) {
-            ret.put(vertex.position.x());
-            ret.put(vertex.position.y());
-            ret.put(vertex.position.z());
-            ret.put(vertex.normal.x());
-            ret.put(vertex.normal.y());
-            ret.put(vertex.normal.z());
-            ret.put(vertex.color.x());
-            ret.put(vertex.color.y());
-            ret.put(vertex.color.z());
-            ret.put(vertex.uv.x());
-            ret.put(vertex.uv.y());
-        }
-
-        ret.flip();
-
-        return ret;
     }
 
     private static sun.misc.Unsafe getUnsafeInstance() {
